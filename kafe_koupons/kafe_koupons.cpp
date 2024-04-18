@@ -60,8 +60,15 @@ int main()
     size_t N_days;
     std::cin>>N_days;
     std::vector<size_t>prices(N_days);
+
+    size_t first_coupon_day = 0;
+    size_t sum = 0;
+
     for (size_t i = 0; i < N_days; i++) 
+    {
         std::cin >> prices[i];
+        if (prices[i] > 100 && !first_coupon_day) first_coupon_day = i;
+    }
 
 
     std::cout << "Hello World!\n";
