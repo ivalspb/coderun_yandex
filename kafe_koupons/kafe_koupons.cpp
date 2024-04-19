@@ -54,6 +54,7 @@ K
 */
 #include <iostream>
 #include <vector>
+#include <stack>
 
 int main()
 {
@@ -61,15 +62,39 @@ int main()
     std::cin>>N_days;
     std::vector<size_t>prices(N_days);
 
-    size_t first_coupon_day = 0;
+    size_t coupons_left=0;
     size_t sum = 0;
+
+    std::vector<size_t> coupons_days{};
 
     for (size_t i = 0; i < N_days; i++) 
     {
         std::cin >> prices[i];
-        if (prices[i] > 100 && !first_coupon_day) first_coupon_day = i;
+        if (prices[i] > 100)
+            coupons_days.push_back(i);
     }
+    coupons_left = coupons_days.size();
 
+    std::stack<size_t>used_coupons_price;
+
+    size_t curent_max_price_day = N_days - 1;
+    for (size_t i = N_days - 1; i >= coupons_days[0]; i--)
+    {
+        if (prices[i] <= 100)
+        {
+            if (prices[i] > prices[curent_max_price_day]) curent_max_price_day = i;
+        }
+        else 
+        {
+            prices.erase(prices.begin() + curent_max_price_day);
+            used_coupons_price.push(prices[i]);
+            prices.erase(prices.begin() + i);
+            coupons_left--;
+            curent_max_price_day = prices.end() - prices.begin();
+            for(size_t j=prices.end()-prices.begin();j>i;j--)
+        }
+
+    }
 
     std::cout << "Hello World!\n";
     return 0;
