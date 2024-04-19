@@ -54,42 +54,46 @@ K
 */
 #include <iostream>
 #include <vector>
+#include <map>
 #include <stack>
 
 int main()
 {
     size_t N_days;
     std::cin>>N_days;
-    std::vector<size_t>prices(N_days);
+    std::map<size_t,size_t>prices;
 
-    size_t coupons_left=0;
     size_t sum = 0;
 
-    std::vector<size_t> coupons_days{};
+    std::stack<size_t> coupons_days{};
 
     for (size_t i = 0; i < N_days; i++) 
     {
         std::cin >> prices[i];
         if (prices[i] > 100)
-            coupons_days.push_back(i);
+            coupons_days.push(i);
     }
-    coupons_left = coupons_days.size();
+    size_t coupons_used = 0;
 
-    std::stack<size_t>used_coupons_price;
+    std::stack<std::pair<size_t,size_t>>used_coupons;
+    std::stack<size_t>free_days;
 
-    size_t curent_max_price_day = N_days - 1;
-    for (size_t i = N_days - 1; i >= coupons_days[0]; i--)
+    auto curent_max_price_day = prices.rend();
+    for (auto i = prices.rbegin(); i != prices.rend()||coupons_days.empty(); i--)
     {
-        if (prices[i] <= 100)
+        if (i->second <= 100)
         {
-            if (prices[i] > prices[curent_max_price_day]) curent_max_price_day = i;
+            if (i->second > curent_max_price_day->second) curent_max_price_day = i;
         }
         else 
         {
-            prices.erase(prices.begin() + curent_max_price_day);
-            used_coupons_price.push(prices[i]);
-            prices.erase(prices.begin() + i);
-            coupons_left--;
+            free_days.push(curent_max_price_day->first);
+            prices.erase(curent_max_price_day->first);
+            used_coupons.push(*i);
+            coupons_used++;
+            prices.erase(i->first);
+            coupons_days.pop();
+            //нужно заново найти максимум до текущего, ввести второй итератор?
             curent_max_price_day = prices.end() - prices.begin();
             for(size_t j=prices.end()-prices.begin();j>i;j--)
         }
