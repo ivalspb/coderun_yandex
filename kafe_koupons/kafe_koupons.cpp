@@ -78,9 +78,13 @@ int main()
     std::stack<std::pair<size_t,size_t>>used_coupons;
     std::stack<size_t>free_days;
 
-    auto curent_max_price_day = prices.rbegin();
-    for (auto i = prices.rbegin(); i != prices.rend()||coupons_days.empty(); i++)
+    auto curent_max_price_day = --prices.end();
+    auto i = curent_max_price_day;
+    if(!coupons_days.empty())
+    do
+    //for (auto i = --prices.end(); i != prices.begin()||coupons_days.empty(); )
     {
+        //i--;
         if (i->second <= 100)
         {
             if (i->second > curent_max_price_day->second) 
@@ -93,15 +97,21 @@ int main()
             used_coupons.push(*i);
 			sum += i->second;
             coupons_used++;
-            prices.erase(i->first);
+            i=prices.erase(i);
             coupons_days.pop();
             //нужно заново найти максимум до текущего, ввести второй итератор?
-            curent_max_price_day = prices.rbegin();
-            for (auto j = prices.rbegin(); j != i; j++)
+            curent_max_price_day = --prices.end();
+            auto j = curent_max_price_day;
+            //for (auto j = prices.rbegin(); j != i; j++)
+            while (j != i)
+            {
                 if (j->second > curent_max_price_day->second)
                     curent_max_price_day = j;
+                --j;
+            } 
         }
-    }
+        --i;
+    } while (i!=prices.begin()||coupons_days.empty());
 	for (const auto& p : prices) sum += p.second;
     std::cout << sum<<std::endl;
 
@@ -109,7 +119,7 @@ int main()
 
     while (!used_coupons.empty())
     {
-        std::cout << used_coupons.top().first << std::endl;
+        std::cout << used_coupons.top().first+1 << std::endl;
         used_coupons.pop();
     }
 
