@@ -94,12 +94,13 @@ int main()
             prices.erase(i->first);
             coupons_days.pop();
             //нужно заново найти максимум до текущего, ввести второй итератор?
-            curent_max_price_day = prices.end() - prices.begin();
-            for(size_t j=prices.end()-prices.begin();j>i;j--)
+            curent_max_price_day = prices.rbegin();
+            for (auto j = prices.rbegin(); j != i; j--)
+                if (j->second > curent_max_price_day->second)
+                    curent_max_price_day = j;
         }
-
     }
-
+    for(auto [days,prices1]:prices)
     std::cout << "Hello World!\n";
     return 0;
 }
