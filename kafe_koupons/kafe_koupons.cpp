@@ -90,6 +90,7 @@ int main()
             free_days.push(curent_max_price_day->first);
             prices.erase(curent_max_price_day->first);
             used_coupons.push(*i);
+			sum += i->second;
             coupons_used++;
             prices.erase(i->first);
             coupons_days.pop();
@@ -100,7 +101,16 @@ int main()
                     curent_max_price_day = j;
         }
     }
-    for(auto [days,prices1]:prices)
-    std::cout << "Hello World!\n";
+	for (const auto& p : prices) sum += p.second;
+    std::cout << sum<<std::endl;
+
+	std::cout << coupons_days.size()-used_coupons.size()<<" " <<used_coupons.size() << std::endl;
+
+    while (!used_coupons.empty())
+    {
+        std::cout << used_coupons.top().first << std::endl;
+        used_coupons.pop();
+    }
+
     return 0;
 }
