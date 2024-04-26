@@ -20,31 +20,36 @@ int main()
     std::cin >> M;
     std::pair<size_t, size_t> max_lenght = { 0,0 };
     //<номер первого общего элемента во втором множестве, количество общих элементов>
+    std::pair<size_t, size_t> cur_max_lenght = { 0,0 };
+
     for (size_t j = 1; j <= M; j++)
     {
         int el;
+
         std::cin >> el;
         m_set[j] = el;
         auto i = n_set.find(el);
         if (i != n_set.end())
         {
-            if (!max_lenght.second)//first el unity
+            if (!cur_max_lenght.second)//first el unity
             {
-                max_lenght.first = j;
-                max_lenght.second = 1;
+                cur_max_lenght.first = j;
+                cur_max_lenght.second = 1;
             }
-            else if (j - max_lenght.second == max_lenght.first)
+            else if (n_set[m_set[j]] - cur_max_lenght.second == n_set [m_set[cur_max_lenght.first]] )
             {
-                max_lenght.second++;
+                cur_max_lenght.second++;
             }
             else
             {
-                max_lenght.first = j;
-                max_lenght.second = 1;
+                cur_max_lenght.first = j;
+                cur_max_lenght.second = 1;
             }
         }
         else
-            max_lenght = { 0,0 };
+            cur_max_lenght = { 0,0 };
+        if (cur_max_lenght.second > max_lenght.second)
+            max_lenght = cur_max_lenght;
     }
     for(size_t i=0;i<max_lenght.second;i++)
         std::cout << m_set[max_lenght.first+i] <<" ";
