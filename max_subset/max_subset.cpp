@@ -19,7 +19,7 @@ int main()
     }
     std::cin >> M;
     std::pair<size_t, size_t> max_lenght = { 0,0 };
-    //<номер первого общего элемента в первом множестве, количество общих элементов>
+    //<номер первого общего элемента во втором множестве, количество общих элементов>
     for (size_t j = 1; j <= M; j++)
     {
         int el;
@@ -28,24 +28,25 @@ int main()
         auto i = n_set.find(el);
         if (i != n_set.end())
         {
-            if (!max_lenght.second)
+            if (!max_lenght.second)//first el unity
             {
-                max_lenght.first = i->second;
+                max_lenght.first = j;
                 max_lenght.second = 1;
             }
-            else if (i->second - max_lenght.second == max_lenght.first)
+            else if (j - max_lenght.second == max_lenght.first)
             {
                 max_lenght.second++;
             }
             else
             {
-                max_lenght.first = i->second;
+                max_lenght.first = j;
                 max_lenght.second = 1;
             }
         }
         else
             max_lenght = { 0,0 };
     }
-    std::cout << "Hello World!\n";
+    for(size_t i=0;i<max_lenght.second;i++)
+        std::cout << m_set[max_lenght.first+i] <<" ";
 }
 
