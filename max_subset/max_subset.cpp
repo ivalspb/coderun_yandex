@@ -3,46 +3,40 @@
 
 #include <iostream>
 #include <vector>
-#include <map>
 
 int main()
 {
     size_t N, M;
     std::cin >> N;
-    std::map<int, size_t>n_set;//<value,index>
-    std::map<size_t,int> m_set;//<<index,value>
-    for (size_t i = 1; i <= N; i++)
-    {
-        int el;
-        std::cin >> el;
-        n_set[el] = i;
-    }
+    std::vector<int>n_set(N);//<value,index>
+    
+    for (size_t i = 0; i < N; i++)
+        std::cin >> n_set[i];
     std::cin >> M;
+    std::vector<int>m_set(M);
     std::pair<size_t, size_t> max_lenght = { 0,0 };
-    //<номер первого общего элемента во втором множестве, количество общих элементов>
+    //<номер первого общего элемента в первом множестве, количество общих элементов>
     std::pair<size_t, size_t> cur_max_lenght = { 0,0 };
 
-    for (size_t j = 1; j <= M; j++)
+    for (size_t j = 0; j < M; j++)
     {
-        int el;
-
-        std::cin >> el;
-        m_set[j] = el;
-        auto i = n_set.find(el);
+        std::cin >> m_set[j];
+        auto i = std::find(n_set.begin(),n_set.end(), m_set[j]);
         if (i != n_set.end())
         {
             if (!cur_max_lenght.second)//first el unity
             {
-                cur_max_lenght.first = j;
+                cur_max_lenght.first = std::distance(i,n_set.begin());
                 cur_max_lenght.second = 1;
             }
-            else if (n_set[m_set[j]] - cur_max_lenght.second == n_set [m_set[cur_max_lenght.first]] )
+            //else if (n_set[m_set[j]] - cur_max_lenght.second == n_set [m_set[cur_max_lenght.first]] )
+            else if(std::distance(i,n_set.begin())-cur_max_lenght.second== cur_max_lenght.first)
             {
                 cur_max_lenght.second++;
             }
             else
             {
-                cur_max_lenght.first = j;
+                cur_max_lenght.first = std::distance(i, n_set.begin());
                 cur_max_lenght.second = 1;
             }
         }
@@ -52,6 +46,6 @@ int main()
             max_lenght = cur_max_lenght;
     }
     for(size_t i=0;i<max_lenght.second;i++)
-        std::cout << m_set[max_lenght.first+i] <<" ";
+        std::cout << n_set[max_lenght.first+i] <<" ";
 }
 
