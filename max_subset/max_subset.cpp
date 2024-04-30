@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 int main()
 {
@@ -26,17 +27,17 @@ int main()
         {
             if (!cur_max_lenght.second)//first el unity
             {
-                cur_max_lenght.first = std::distance(i,n_set.begin());
+                cur_max_lenght.first = std::distance(n_set.begin(),i);
                 cur_max_lenght.second = 1;
             }
             //else if (n_set[m_set[j]] - cur_max_lenght.second == n_set [m_set[cur_max_lenght.first]] )
-            else if(std::distance(i,n_set.begin())-cur_max_lenght.second== cur_max_lenght.first)
+            else if(std::distance(n_set.begin(),i)-cur_max_lenght.second== cur_max_lenght.first)
             {
                 cur_max_lenght.second++;
             }
             else
             {
-                cur_max_lenght.first = std::distance(i, n_set.begin());
+                cur_max_lenght.first = std::distance(n_set.begin(),i);
                 cur_max_lenght.second = 1;
             }
         }
