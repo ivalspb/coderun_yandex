@@ -22,7 +22,11 @@ int main()
     for (size_t j = 0; j < M; j++)
     {
         std::cin >> m_set[j];
-        auto i = std::find(n_set.begin(),n_set.end(), m_set[j]);
+        auto i = std::find(n_set.begin()+cur_max_lenght.first+ cur_max_lenght.second,n_set.end(), m_set[j]);//нужно учесть повторы!
+        if (i == n_set.end()&&(cur_max_lenght.first + cur_max_lenght.second))
+        {
+            i= std::find(n_set.begin() + cur_max_lenght.first + cur_max_lenght.second-1, n_set.end(), m_set[j]);
+        }
         if (i != n_set.end())
         {
             if (!cur_max_lenght.second)//first el unity
@@ -30,9 +34,13 @@ int main()
                 cur_max_lenght.first = std::distance(n_set.begin(),i);
                 cur_max_lenght.second = 1;
             }
-            //else if (n_set[m_set[j]] - cur_max_lenght.second == n_set [m_set[cur_max_lenght.first]] )
             else if(std::distance(n_set.begin(),i)-cur_max_lenght.second== cur_max_lenght.first)
             {
+                cur_max_lenght.second++;
+            }
+            else if (cur_max_lenght.first<N && n_set[cur_max_lenght.first]== n_set[cur_max_lenght.first+1])
+            {
+                cur_max_lenght.first++;
                 cur_max_lenght.second++;
             }
             else
