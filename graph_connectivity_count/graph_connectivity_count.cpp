@@ -7,18 +7,15 @@
 using namespace std;
 
 //find one connectivity part of graph and mark it visited and push to stack and count++ it
-bool mark_connetivity(map<size_t, set<size_t>>& verteces, const size_t& vertex, map<size_t, bool>& visited, set<size_t>& connecitivty_set)
+void mark_connetivity(map<size_t, set<size_t>>& verteces, const size_t& vertex, map<size_t, bool>& visited, set<size_t>& connecitivty_set)
 {
     if (!visited[vertex])
     {
         visited[vertex] = true;
         connecitivty_set.insert(vertex);
         for (const auto& i : verteces[vertex])
-        {
-            if (mark_connetivity(verteces, i, visited, connecitivty_set)) return true;
-        }
+            mark_connetivity(verteces, i, visited, connecitivty_set);
     }
-    else return false;
 }
 
 int main()
@@ -39,7 +36,8 @@ int main()
     for (size_t i = 1; i <= N_verteces; i++)
     {
         set<size_t> connectivity_set;
-        if (mark_connetivity(verteces, i, v_visited, connectivity_set))
+        mark_connetivity(verteces, i, v_visited, connectivity_set);
+        if (!connectivity_set.empty())
         {
             connecivity_stack.push(connectivity_set);
             connectivity_count++;
