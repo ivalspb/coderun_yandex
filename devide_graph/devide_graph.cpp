@@ -23,16 +23,66 @@ int main()
 {
     size_t N, M;
     cin >> N >> M;
-    map<size_t, multiset<size_t>>graph;
+    set<size_t>gr1,gr2;
+    bool res = true;
     for (size_t i = 0; i < M; i++)
     {
         size_t st1, st2;
         cin >> st1 >> st2;
-        graph[st1].insert(st2);
-        graph[st2].insert(st1);
-    }
-    map<size_t, bool>visited;
-    set<size_t>source, destination;
+        //or 1st_group, or 2nd_group, or new
+        if (gr1.find(st1)!=gr1.end())
+        {
+            if (gr1.find(st2) != gr1.end())
+            {
+                res = false;
+                break;
+            }
+            else if (gr2.find(st2) == gr2.end())
+                gr2.insert(st2);
+        }
+        else if (gr1.find(st2) != gr1.end())
+        {
+            if (gr1.find(st1) != gr1.end())
+            {
+                res = false;
+                break;
+            }
+            else if (gr2.find(st1) == gr2.end())
+                gr2.insert(st1);
+        }
+        else if (gr2.find(st1) != gr2.end())
+        {
+            if (gr2.find(st1) != gr2.end())
+            {
+                res = false;
+                break;
+            }
+            else if (gr1.find(st2) == gr1.end())
+                gr1.insert(st2);
+        }
+        else if (gr2.find(st2) != gr2.end())
+        {
+            if (gr2.find(st1) != gr2.end())
+            {
+                res = false;
+                break;
+            }
+            else if (gr1.find(st1) == gr1.end())
+                gr1.insert(st1);
+        }
+        else
+        {
+            gr1.insert(st1);
+            gr2.insert(st2);
+        }
 
-    cout << "Hello World!\n";
+        /*graph[st1].insert(st2);
+        graph[st2].insert(st1);*/
+    }
+
+    //map<size_t, bool>visited;
+    //set<size_t>source, destination;
+
+    if (res) cout << "YES";
+    else cout << "NO";
 }
