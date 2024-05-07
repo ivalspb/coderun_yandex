@@ -52,7 +52,7 @@ int main()
         }
         else if (gr2.find(st1) != gr2.end())
         {
-            if (gr2.find(st1) != gr2.end())
+            if (gr2.find(st2) != gr2.end())
             {
                 res = false;
                 break;
