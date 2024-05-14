@@ -23,66 +23,15 @@ int main()
 {
     size_t N, M;
     cin >> N >> M;
-    set<size_t>gr1,gr2;
-    bool res = true;
+    map<size_t, set<size_t>>g;
     for (size_t i = 0; i < M; i++)
     {
-        size_t st1, st2;
-        cin >> st1 >> st2;
-        //or 1st_group, or 2nd_group, or new
-        if (gr1.find(st1)!=gr1.end())
-        {
-            if (gr1.find(st2) != gr1.end())
-            {
-                res = false;
-                break;
-            }
-            else if (gr2.find(st2) == gr2.end())
-                gr2.insert(st2);
-        }
-        else if (gr1.find(st2) != gr1.end())
-        {
-            if (gr1.find(st1) != gr1.end())
-            {
-                res = false;
-                break;
-            }
-            else if (gr2.find(st1) == gr2.end())
-                gr2.insert(st1);
-        }
-        else if (gr2.find(st1) != gr2.end())
-        {
-            if (gr2.find(st2) != gr2.end())
-            {
-                res = false;
-                break;
-            }
-            else if (gr1.find(st2) == gr1.end())
-                gr1.insert(st2);
-        }
-        else if (gr2.find(st2) != gr2.end())
-        {
-            if (gr2.find(st1) != gr2.end())
-            {
-                res = false;
-                break;
-            }
-            else if (gr1.find(st1) == gr1.end())
-                gr1.insert(st1);
-        }
-        else
-        {
-            gr1.insert(st1);
-            gr2.insert(st2);
-        }
-
-        /*graph[st1].insert(st2);
-        graph[st2].insert(st1);*/
+        size_t s1, s2;
+        cin >> s1 >> s2;
+        g[s1].insert(s2);
+        g[s2].insert(s1);
     }
-
-    //map<size_t, bool>visited;
-    //set<size_t>source, destination;
-
+    bool res = true;
     if (res) cout << "YES";
     else cout << "NO";
 }
