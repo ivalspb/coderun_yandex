@@ -14,10 +14,26 @@
 #include <iostream>
 #include <map>
 #include <set>
+#include <vector>
 
 using namespace std;
 
-//void divide
+void dfs(map<size_t, set<size_t>>& g, vector<size_t>& v_color, size_t v, size_t color, bool& res)
+{
+    if (!res) return;
+    else
+    {
+        if(!v_color[v - 1]) v_color[v - 1] = color;
+        for (const auto& i : g[v])
+        {
+            if (!v_color[i-1])
+                dfs(g, v_color, i, 3 - color, res);
+            else
+                if (v_color[i-1] == v_color[v-1]) 
+                    res = 0;
+        }
+    }
+}
 
 int main()
 {
@@ -31,7 +47,10 @@ int main()
         g[s1].insert(s2);
         g[s2].insert(s1);
     }
+    vector<size_t>v_color(N);//0 not visited, 1 or 2 visited
     bool res = true;
+    for (size_t i = 1; i <= N; i++)
+        dfs(g, v_color, i, 1, res);
     if (res) cout << "YES";
     else cout << "NO";
 }
