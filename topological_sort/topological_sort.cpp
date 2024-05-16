@@ -3,12 +3,13 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <stack>
 
 
 
 using namespace std;
 
-void step(map<size_t, set<size_t> >& g, vector<size_t>& v_color, size_t v, bool& sortable, vector<size_t>& result)
+void step(map<size_t, set<size_t> >& g, vector<size_t>& v_color, size_t v, bool& sortable, stack<size_t>& result)
 {
 	if (sortable)
     {
@@ -25,7 +26,7 @@ void step(map<size_t, set<size_t> >& g, vector<size_t>& v_color, size_t v, bool&
                 for (const auto& i : g[v])
                     step(g, v_color, i, sortable, result);
 				v_color[v-1] = 1;
-                result.push_back(v);
+                result.push(v);
             }
         }
     }
@@ -46,7 +47,7 @@ int main()
         g[v1].insert(v2);
     }
     bool sortable = true;
-	vector<size_t>result;
+	stack<size_t>result;
     /*
     * 
     * 0 = white
@@ -65,8 +66,13 @@ int main()
     for (size_t i = 1; i <= N; i++)
         step(g, v_color, i, sortable, result);
     if (sortable)
-        for (const auto& i : result)
-            cout << i << " ";
+    {
+        while (!result.empty())
+        {
+            cout << result.top()<<" ";
+            result.pop();
+        }
+    }
     else
         cout << "-1";
     
