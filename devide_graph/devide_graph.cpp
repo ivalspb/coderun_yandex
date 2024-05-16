@@ -50,7 +50,12 @@ int main()
     vector<size_t>v_color(N);//0 not visited, 1 or 2 visited
     bool res = true;
     for (size_t i = 1; i <= N; i++)
-        dfs(g, v_color, i, 1, res);
+    {
+        if (res)
+            dfs(g, v_color, i, 1, res);
+        else 
+            break;
+    }
     if (res) cout << "YES";
     else cout << "NO";
 }
