@@ -23,7 +23,7 @@ void remove_defis(string& s)
 string extract_number(string& t)
 {
 	string result;
-	for (auto i = t.end() - 8; i != t.end(); i++)
+	for (auto i = t.end() - 7; i != t.end(); i++)
 		result += *i;
 	for (size_t i = 0; i < 7; i++)
 		t.erase(t.end() - 1);
@@ -58,9 +58,9 @@ int main()
 	for (int i = 1; i < 4; i++)
 	{
 		if (cd[0] == cd[i] && n[0] == n[i])
-			cout << "YES";
+			cout << "YES\n";
 		else
-			cout << "NO";
+			cout << "NO\n";
 	}
 
 	return 0;
