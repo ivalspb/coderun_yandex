@@ -38,6 +38,7 @@ string get_code(string& t)
 		append++;
 	for (int i = 3; i > 0; i--)
 		res += *(t.end() - i - append);
+	return res;
 }
 
 int main()
@@ -54,7 +55,14 @@ int main()
 		else
 			cd[i] = get_code(t[i]);
 	}
-	
+	for (int i = 1; i < 4; i++)
+	{
+		if (cd[0] == cd[i] && n[0] == n[i])
+			cout << "YES";
+		else
+			cout << "NO";
+	}
+
 	return 0;
 }
 
