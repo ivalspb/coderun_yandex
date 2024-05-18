@@ -50,7 +50,15 @@ void ins_btree(int x, btree_node* vertex)
     if (x != vertex->val)
     {
         btree_node* new_node = new btree_node;
-        if()
+        if (x < vertex->val && less_branch(x, vertex->left))
+        {
+            //insert
+            new_node->parent = vertex->parent;
+            new_node->left = vertex->left;
+            new_node->right = vertex;
+            vertex->left->parent = new_node;
+            vertex->parent = new_node;
+        }
     }
 }
 
