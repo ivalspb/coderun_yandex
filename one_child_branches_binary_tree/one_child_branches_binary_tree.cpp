@@ -21,13 +21,14 @@ struct btree
 {
     struct btree_node
     {
-        int val;
-        btree_node* parent, *left, *right;
+        int val=0;
+        btree_node* parent=nullptr, *left=nullptr, *right=nullptr;
     };
     btree_node Head;
 
     bool greater_branch(int x, btree_node* vertex)
     {
+        if (!vertex) return true;
         if (x > vertex->val) return false;
         if (vertex->left == nullptr && vertex->right == nullptr) return true;
         if (!vertex->left) return greater_branch(x, vertex->right);
@@ -37,6 +38,7 @@ struct btree
 
     bool less_branch(int x, btree_node* vertex)
     {
+        if (!vertex) return true;
         if (x < vertex->val) return false;
         if (vertex->left == nullptr && vertex->right == nullptr) return true;
         if (!vertex->left) return less_branch(x, vertex->right);
@@ -47,38 +49,45 @@ struct btree
 
     void ins_btree(int x, btree_node* vertex)
     {
-        if (x != vertex->val)
+        if (!((vertex->val) || (vertex->parent) || (vertex->left) || (vertex->right)))
         {
-            if (x < vertex->val)
+            vertex->val = x;
+        }
+        else
+        {
+            if (x != vertex->val)
             {
-                if (less_branch(x, vertex->left))
+                if (x < vertex->val)
                 {
-                    btree_node* new_node = new btree_node;
-                    //insert
-                    new_node->parent = vertex->parent;
-                    new_node->left = vertex->left;
-                    new_node->right = vertex;
-                    vertex->left->parent = new_node;
-                    vertex->parent = new_node;
+                    if (less_branch(x, vertex->left))
+                    {
+                        btree_node* new_node = new btree_node;
+                        //insert
+                        new_node->parent = vertex->parent;
+                        new_node->left = vertex->left;
+                        new_node->right = vertex;
+                        vertex->left->parent = new_node;
+                        vertex->parent = new_node;
+                    }
+                    else
+                    {
+                        ins_btree(x, vertex->left);
+                    }
                 }
-                else
+                else// if (x > vertex->val)
                 {
-                    ins_btree(x, vertex->left);
+                    if (greater_branch(x, vertex->right))
+                    {
+                        btree_node* new_node = new btree_node;
+                        new_node->parent = vertex->parent;
+                        new_node->left = vertex;
+                        new_node->right = vertex->right;
+                        vertex->right->parent = new_node;
+                        vertex->parent = new_node;
+                    }
+                    else
+                        ins_btree(x, vertex->right);
                 }
-            }
-            else// if (x > vertex->val)
-            {
-                if (greater_branch(x, vertex->right))
-                {
-                    btree_node* new_node = new btree_node;
-                    new_node->parent = vertex->parent;
-                    new_node->left = vertex;
-                    new_node->right = vertex->right;
-                    vertex->right->parent = new_node;
-                    vertex->parent = new_node;
-                }
-                else
-                    ins_btree(x, vertex->right);
             }
         }
     }
