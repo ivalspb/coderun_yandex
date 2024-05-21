@@ -23,14 +23,23 @@ struct btree
     {
         int val=0;
         btree_node *left=nullptr, *right=nullptr;
+       /* btree_node() { new btree_node; }
+        ~btree_node() { delete this; }*/
     };
-    btree_node Head;
+    btree_node *Head;
+
+    btree() {
+        Head = new btree_node;
+    }
+    ~btree() {
+        delete Head;
+    }
 
     void ins_btree(int x, btree_node* vertex)
     {
+        if(!vertex) vertex = new btree_node;
         if (!vertex->val)
         {
-            vertex = new btree_node;
             vertex->val = x;
         }
         else
@@ -51,12 +60,12 @@ struct btree
 int main()
 {
     int num;
-    btree btr;
+    btree btr{};
     do
     {
         cin >> num;
         if (num) 
-            btr.ins_btree(num,&btr.Head);
+            btr.ins_btree(num,btr.Head);
     } while (num);
     set<int> res;
 
