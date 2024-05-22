@@ -14,6 +14,8 @@
 #include <iostream>
 #include <vector>
 #include <set>
+//#include <map>
+#include <queue>
 
 using namespace std;
 
@@ -64,34 +66,33 @@ struct btree
 
 };
 
-void dfs(const btree& btr, vector<int>& visited,  btree::btree_node* vertex, set<int>& res)
+void bfs(const btree& btr, queue<btree::btree_node*>visited,  btree::btree_node* vertex, set<int>& res)
 {
-    if (!(vertex->left && vertex->right))
-    {
+    visited.push(vertex);
+    if (!(vertex->left && vertex->right)) 
         res.insert(vertex->val);
-        visited.push_back(vertex->val);
-    }
-    else if (vertex->left)
-        dfs(btr, visited, vertex->left, res);
+    if (vertex->left)
+        bfs(btr, visited, vertex->left, res);
+    if (vertex->right)
+        bfs(btr, visited, vertex->right, res);
+
 }
 
 int main()
 {
     int num;
     btree btr{};
-    size_t sz = 0;
+    queue<btree::btree_node*>visited;
     do
     {
         cin >> num;
         if (num) 
         {
-            sz++;
             btr.ins_btree(num, btr.Head);
         }
     } while (num);
     set<int> res;
-    vector<int>visited(sz);
-
+    bfs(btr, visited, btr.Head, res);
 
     return 0;
 }
