@@ -33,7 +33,7 @@ struct btree
     btree() {
         Head = new btree_node;
     }
-    ~btree() {
+    ~btree() {//с утечками не боремся пока
         delete Head;
     }
 
@@ -66,19 +66,23 @@ struct btree
 
 };
 
-void bfs(const btree& btr, queue<btree::btree_node*>& q, map<int,bool>& visited,  btree::btree_node* vertex, set<int>& res)
+void bfs(const btree& btr, queue<btree::btree_node*>& q, bool init,/*map<int,bool>& visited,  btree::btree_node* vertex,*/ set<int>& res)
 {
-    q.push(vertex);
+    if (!init)
+    {
+        q.push(btr.Head);
+        init = 1;
+    }
     btree::btree_node* cur_vert = q.front();
     q.pop();
-    visited[cur_vert->val] = 1;
-    if (!(vertex->left && vertex->right)) 
-        res.insert(vertex->val);
-    if (vertex->left)
-        q.push()
-    if (vertex->right)
-        bfs(btr, visited, vertex->right, res);
-
+    if (!(cur_vert->left || cur_vert->right)) 
+        res.insert(cur_vert->val);
+    if (cur_vert->left)
+        q.push(cur_vert->left);
+    if (cur_vert->right)
+        q.push(cur_vert->right);
+    while(!q.empty())
+        bfs(btr, q, init, res);
 }
 
 int main()
@@ -86,18 +90,18 @@ int main()
     int num;
     btree btr{};
     queue<btree::btree_node*>q;
-    map<int,bool>visited;
     do
     {
         cin >> num;
         if (num) 
         {
-            visited[num];
             btr.ins_btree(num, btr.Head);
         }
     } while (num);
     set<int> res;
-    bfs(btr, q, visited, btr.Head, res);
-
+    bool init = false;
+    bfs(btr, q, init, res);
+    for (auto i : res)
+        cout << i << " ";
     return 0;
 }
