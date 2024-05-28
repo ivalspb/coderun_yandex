@@ -11,6 +11,7 @@
 #include <iostream>
 #include <set>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -29,6 +30,25 @@ int main()
         if ((meters[i] - 5) % 10 == 0)
             ending5.insert(meters[i]);
     }
-
+    map<size_t, size_t>ind_rating;//метры, место
+    size_t j = 1;
+    for (auto i = rating.begin(); i != rating.end(); ++i)
+    {
+        ind_rating[*i] = j;
+        j++;
+    }
+    for (auto i = ending5.rbegin(); i != ending5.rend(); ++i)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            if (meters[j] == *i && j > 0 && ind_rating[meters[j - 1]] < 4)
+            {
+                cout << ind_rating[*i];
+                return 0;
+            }
+        }
+        
+    }
+    cout << "0";
     return 0;
 }
