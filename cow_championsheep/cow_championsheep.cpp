@@ -22,7 +22,7 @@ int main()
     size_t N;
     cin >> N;
     vector<size_t>meters(N);
-    set<size_t>rating,ending5;
+    multiset<size_t>rating,ending5;
     for (int i = 0; i < N; i++) 
     {
         cin >> meters[i];
@@ -32,23 +32,32 @@ int main()
     }
     map<size_t, size_t>ind_rating;//метры, место
     size_t j = 1;
-    for (auto i = rating.begin(); i != rating.end(); ++i)
+    for (auto i = rating.rbegin(); i != rating.rend(); ++i)
     {
-        ind_rating[*i] = j;
+        if(!ind_rating[*i])
+            ind_rating[*i] = j;
         j++;
     }
-    for (auto i = ending5.rbegin(); i != ending5.rend(); ++i)
+    set<size_t>winners_index;
+    for (int i = 0; i < N; i++)
+        if (meters[i] == *(rating.rbegin()))
+            winners_index.insert(i);
+    for(size_t i:winners_index)
+        if(i>0&&i<N-1&&)
+    /*for(int i=0;i<N;i++)
+        if(meters[i]==)*/
+    /*for (auto i = ending5.rbegin(); i != ending5.rend(); ++i)
     {
         for (int j = 0; j < N; j++)
         {
-            if (meters[j] == *i && j > 0 && ind_rating[meters[j - 1]] < 4)
+            if (meters[j] == *i && j > 0 &&j<N-1 && ind_rating[meters[j - 1]] < 2 && meters[j+1]<meters[j])
             {
                 cout << ind_rating[*i];
                 return 0;
             }
         }
         
-    }
+    }*/
     cout << "0";
     return 0;
 }
