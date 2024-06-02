@@ -14,6 +14,11 @@
 
 using namespace std;
 
+bool dfs(map<size_t, size_t>& g, vector<size_t>& v_color, size_t v)
+{
+
+}
+
 int main()
 {
     size_t n;
@@ -22,6 +27,16 @@ int main()
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             cin >> smg[i][j];
+    map<size_t, size_t>g;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            if (smg[i][j])
+            {
+                g[i] = j;
+                g[j] = i;
+            }
+    vector<size_t>v_color(n);
+
     return 0;
 }
 
