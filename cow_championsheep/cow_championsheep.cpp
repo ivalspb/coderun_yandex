@@ -38,26 +38,21 @@ int main()
             ind_rating[*i] = j;
         j++;
     }
-    set<size_t>winners_index;
+    set<size_t>winners_indexes;
     for (int i = 0; i < N; i++)
         if (meters[i] == *(rating.rbegin()))
-            winners_index.insert(i);
-    for(size_t i:winners_index)
-        if(i>0&&i<N-1&&)
-    /*for(int i=0;i<N;i++)
-        if(meters[i]==)*/
-    /*for (auto i = ending5.rbegin(); i != ending5.rend(); ++i)
+            winners_indexes.insert(i);
+    set<size_t>candidats_index;
+    for (size_t i = *winners_indexes.begin()+1;i<N-1;i++)
+        if(meters[i] % 10 == 5)
+            if(meters[i]>meters[i+1])
+                candidats_index.insert(ind_rating[meters[i]]);
+    if(!candidats_index.empty())
     {
-        for (int j = 0; j < N; j++)
-        {
-            if (meters[j] == *i && j > 0 &&j<N-1 && ind_rating[meters[j - 1]] < 2 && meters[j+1]<meters[j])
-            {
-                cout << ind_rating[*i];
-                return 0;
-            }
-        }
-        
-    }*/
+        cout << *candidats_index.begin();
+        return 0;
+    }
+    
     cout << "0";
     return 0;
 }
