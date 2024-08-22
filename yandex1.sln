@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cow_championsheep", "cow_ch
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cicle_search", "cicle_search\cicle_search.vcxproj", "{1248E4C8-EAF8-4936-9EE7-83A489C4EE4C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "две команды", "две команды\две команды.vcxproj", "{F3147392-C0B6-4773-ADE4-5B0446B9E726}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -131,6 +133,14 @@ Global
 		{1248E4C8-EAF8-4936-9EE7-83A489C4EE4C}.Release|x64.Build.0 = Release|x64
 		{1248E4C8-EAF8-4936-9EE7-83A489C4EE4C}.Release|x86.ActiveCfg = Release|Win32
 		{1248E4C8-EAF8-4936-9EE7-83A489C4EE4C}.Release|x86.Build.0 = Release|Win32
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Debug|x64.ActiveCfg = Debug|x64
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Debug|x64.Build.0 = Debug|x64
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Debug|x86.ActiveCfg = Debug|Win32
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Debug|x86.Build.0 = Debug|Win32
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Release|x64.ActiveCfg = Release|x64
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Release|x64.Build.0 = Release|x64
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Release|x86.ActiveCfg = Release|Win32
+		{F3147392-C0B6-4773-ADE4-5B0446B9E726}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
