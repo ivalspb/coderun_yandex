@@ -4,18 +4,17 @@
 
 using namespace std;
 
-int get_stop(map<int,pair<size_t,size_t>>& s, int req)
+size_t get_stop(map<int,pair<size_t,size_t>>& s, int req)
 {
-    auto s_ind = find(s.begin(), s.end(), req);
+    auto s_ind = s.find(req);
     if (s_ind != s.end())
         return s_ind->second.first;
+    else if ((s.upper_bound(req)) != s.end() && (s.lower_bound(req)) != s.end())
+        return s.upper_bound(req)->second.second;
+    else if (s.lower_bound(req) == s.end())
+        return s.upper_bound(req)->second.second;
     else
-    {
-        if ((*s.upper_bound(req)).second.first && (*s.lower_bound(req)).second.first)
-        {
-
-        }
-    }
+        return s.begin()->second.first;
 }
 
 int main()
@@ -28,15 +27,19 @@ int main()
     map<int, pair<size_t, size_t>>s;//coord,min_index,max_index
     for (size_t i = 1; i <= stop_count; i++)
     {
-        if (!s[stops[i]].first)
-            s[stops[i]] = { i,i };
+        if (!s[stops[i-1]].first)
+            s[stops[i-1]] = { i,i };
         else
-            s[stops[i]].second = i;
+            s[stops[i-1]].second = i;
     }
 
     for (auto& i : reqs)
+    {
         cin >> i;
+        cout << get_stop(s, i) << endl;
+    }
 
-    std::cout << "Hello World!\n";
+
+    //std::cout << "Hello World!\n";
 }
 
