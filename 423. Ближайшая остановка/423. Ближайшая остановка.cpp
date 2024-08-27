@@ -9,10 +9,10 @@ size_t get_stop(map<int,pair<size_t,size_t>>& s, int req)
     auto s_ind = s.find(req);
     if (s_ind != s.end())
         return s_ind->second.first;
-    else if ((s.upper_bound(req)) != s.end() && (s.lower_bound(req)) != s.end())
-        return s.upper_bound(req)->second.second;
-    else if (s.lower_bound(req) == s.end())
-        return s.upper_bound(req)->second.second;
+    else if ((s.upper_bound(req)) != s.end() && (--s.lower_bound(req)) != s.end())
+        return (--s.lower_bound(req))->second.second;
+    else if (--s.lower_bound(req) == s.end())
+        return (--s.lower_bound(req))->second.second;
     else
         return s.begin()->second.first;
 }
@@ -36,7 +36,7 @@ int main()
     for (auto& i : reqs)
     {
         cin >> i;
-        cout << get_stop(s, i) << endl;
+        cout <</*"stop "<<i<<" "<<*/ get_stop(s, i) << endl;
     }
 
 
