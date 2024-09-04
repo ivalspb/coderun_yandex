@@ -10,15 +10,15 @@ size_t get_stop(map<int,pair<size_t,size_t>>& s, int req)
     
     if (s_ind != s.end())
         return s_ind->second.first;//минимальная среди остановок совпадающих с запросом
-    \
+    
     auto s_upper = s.upper_bound(req);
     auto s_lower = s_upper;
     if (s_lower != s.begin())
         --s_lower;
-    auto s_min = s_upper!=s.end()?(s_upper->first - req < s_lower->first - req ? s_upper : s_lower):s_lower;
+    auto s_min = s_upper != s.end() ? (abs(s_upper->first - req) < abs(s_lower->first - req) ? s_upper : s_lower) : s_lower;
     
     if ((s_min->second.first != s_min->second.second) or 
-        ((s_upper!=s.end())&&(s_upper!=s_lower) && (s_upper->first - req == s_lower->first - req)))//несколько остановок с одинаковым расстоянием
+        ((s_upper != s.end()) && (s_upper != s_lower) && (abs(s_upper->first - req) == abs(s_lower->first - req))))//несколько остановок с одинаковым расстоянием
     {
         if (abs(s_upper->first - req) == abs(s_lower->first - req))//остановки и слева и справа одинаково минимально удалены от запроса
             return s_lower->second.second;
@@ -50,10 +50,7 @@ int main()
     for (auto& i : reqs)
     {
         cin >> i;
-        cout <</*"stop "<<i<<" "<<*/ get_stop(s, i) << endl;
+        cout << get_stop(s, i) << endl;
     }
-
-
-    //std::cout << "Hello World!\n";
 }
 
