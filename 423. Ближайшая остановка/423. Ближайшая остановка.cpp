@@ -20,7 +20,7 @@ size_t get_stop(map<int,pair<size_t,size_t>>& s, int req)
     if ((s_min->second.first != s_min->second.second) or 
         ((s_upper != s.end()) && (s_upper != s_lower) && (abs(s_upper->first - req) == abs(s_lower->first - req))))//несколько остановок с одинаковым расстоянием
     {
-        if (abs(s_upper->first - req) == abs(s_lower->first - req))//остановки и слева и справа одинаково минимально удалены от запроса
+        if ((s_upper!=s_lower)&&(abs(s_upper->first - req) == abs(s_lower->first - req)))//остановки и слева и справа одинаково минимально удалены от запроса
             return s_lower->second.second;
         else if (abs(s_lower->first - req) < abs(s_upper->first - req))//остановки минимально удаленные от запроса только слева
             return s_lower->second.second;
